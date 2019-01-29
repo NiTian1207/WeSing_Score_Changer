@@ -128,5 +128,11 @@ namespace wesingchangescore
             Form1_Load(this,new EventArgs());
             
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            listView1.Items.Clear();
+            Form1_Load(this, new EventArgs());
+        }
     }
 }
