@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("NiTian")]
 [assembly: AssemblyProduct("WeSing Score Changer")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyCopyright("NiTian")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

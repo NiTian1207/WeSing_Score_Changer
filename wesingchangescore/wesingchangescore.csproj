@@ -51,6 +51,9 @@
   <PropertyGroup>
     <ApplicationIcon>WeSing.exe%28IDI_KSONGS%29.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>wesingchangescore.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />

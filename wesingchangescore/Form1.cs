@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace wesingchangescore
@@ -22,7 +16,7 @@ namespace wesingchangescore
             InitializeComponent();
         }
 
-        private ArrayList getmidtextarraylist(string origintext ,string lefttext,string righttext)
+        private ArrayList getmidtextarraylist(string origintext, string lefttext, string righttext)
         {
             int start = 0;
             int left = origintext.IndexOf(lefttext, start);
@@ -56,8 +50,8 @@ namespace wesingchangescore
             data = sr.ReadToEnd();
             sr.Close();
             ArrayList datalist = getmidtextarraylist(data, "<Outputs", @"/>");
-            
-            for (int i = 0;i < datalist.Count;i++)
+
+            for (int i = 0; i < datalist.Count; i++)
             {
                 ListViewItem lvItem = new ListViewItem();
                 lvItem.Text = getmidtext(datalist[i].ToString(), "Name=\"", "\"");
@@ -72,7 +66,7 @@ namespace wesingchangescore
                     case "5": lvItem.SubItems.Add("SS"); break;
                     case "6": lvItem.SubItems.Add("SSS"); break;
                 }
-                
+
                 lvItem.SubItems.Add((getmidtext(datalist[i].ToString(), "AllScores=\"", "\"").Split(',').Length - 1).ToString());
                 lvItem.SubItems.Add(((getmidtext(datalist[i].ToString(), "AllScores=\"", "\"").Split(',').Length - 1) * 100).ToString());
                 listView1.Items.Add(lvItem);
@@ -90,7 +84,7 @@ namespace wesingchangescore
                 textBox2.Text = getmidtext(datalist[listView1.SelectedItems[0].Index].ToString(), "AllScores=\"", "\"");
                 label4.Text = listView1.SelectedItems[0].Index.ToString();
             }
-                
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -119,20 +113,117 @@ namespace wesingchangescore
             line = line.Replace(getmidtext(datalist[Int32.Parse(label4.Text)].ToString(), "AllScores=\"", "\""), textBox2.Text);
             data = data.Replace(datalist[Int32.Parse(label4.Text)].ToString(), line);
             //MessageBox.Show(data);
-            
+
             StreamWriter sw = new StreamWriter(datapath);
             sw.Write(data);
             sw.Flush();
             sw.Close();
             listView1.Items.Clear();
-            Form1_Load(this,new EventArgs());
-            
+            Form1_Load(this, new EventArgs());
+
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             listView1.Items.Clear();
             Form1_Load(this, new EventArgs());
+        }
+
+        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string s = textBox2.Text;
+            string[] _s = s.Split(',');
+            string res = "";
+            int r = 0;
+            try
+            {
+                foreach (string a in _s)
+                {
+                    r += Int32.Parse(a);
+                }
+            }
+            catch
+            { }
+
+            int chazhi = 0;
+            if (comboBox1.SelectedIndex == 0)
+            {
+                if (r < Int32.Parse(listView1.SelectedItems[0].SubItems[4].Text) * 0.6)
+                {
+                    chazhi = (int)(Int32.Parse(listView1.SelectedItems[0].SubItems[4].Text) * 0.6 - r);
+                }
+            }
+            if (comboBox1.SelectedIndex == 1)
+            {
+                if (r < Int32.Parse(listView1.SelectedItems[0].SubItems[4].Text) * 0.5)
+                {
+                    chazhi = (int)(Int32.Parse(listView1.SelectedItems[0].SubItems[4].Text) * 0.5 - r);
+                }
+            }
+            if (comboBox1.SelectedIndex == 2)
+            {
+                if (r < Int32.Parse(listView1.SelectedItems[0].SubItems[4].Text) * 0.4)
+                {
+                    chazhi = (int)(Int32.Parse(listView1.SelectedItems[0].SubItems[4].Text) * 0.4 - r);
+                }
+            }
+            if (comboBox1.SelectedIndex == 3)
+            {
+
+            }
+            if (comboBox1.SelectedIndex == 4)
+            {
+                if (r < Int32.Parse(listView1.SelectedItems[0].SubItems[4].Text) * 0.7)
+                {
+                    chazhi = (int)(Int32.Parse(listView1.SelectedItems[0].SubItems[4].Text) * 0.7 - r);
+                }
+            }
+            if (comboBox1.SelectedIndex == 5)
+            {
+                if (r < Int32.Parse(listView1.SelectedItems[0].SubItems[4].Text) * 0.8)
+                {
+                    chazhi = (int)(Int32.Parse(listView1.SelectedItems[0].SubItems[4].Text) * 0.8 - r);
+                }
+            }
+            if (comboBox1.SelectedIndex == 6)
+            {
+                if (r < Int32.Parse(listView1.SelectedItems[0].SubItems[4].Text) * 0.9)
+                {
+                    chazhi = (int)(Int32.Parse(listView1.SelectedItems[0].SubItems[4].Text) * 0.9 - r);
+                }
+            }
+
+            if (chazhi > 0)
+            {
+                for (int i = 0; i < _s.Length - 1; i++)
+                {
+                    if (Int32.Parse(_s[i]) < 100)
+                    {
+                        int _chazhi = Int32.Parse(_s[i]) + chazhi - 100;
+                        if (_chazhi > 0)
+                        {
+                            chazhi = _chazhi;
+                            _s[i] = "100";
+                        }
+                        else
+                        {
+                            _s[i] = chazhi.ToString();
+                            break;
+                        }
+                    }
+                }
+            }
+            foreach (string a in _s)
+            {
+                if (a != "")
+                { res += a + ","; }
+            }
+            textBox2.Text = res;
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("explorer.exe","https://www.nitian1207.top");
         }
     }
 }
