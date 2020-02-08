@@ -1,0 +1,2 @@
+＃WeSing_Score_Changer
+全民K歌分数修改器
